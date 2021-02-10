@@ -1,30 +1,57 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="app">
+    <router-view />
   </div>
-  <router-view/>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  box-sizing: border-box;
 }
 
-#nav {
-  padding: 30px;
+body,
+html {
+  height: 100vh;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+body {
+  background: #e9f9ee url('./assets/Playing\ Music-bro.svg') no-repeat 80% top;
+  --webkit-font-smoothing: antialiased;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+body,
+input,
+button {
+  font-size: 16px;
+  font-family: Roboto, sans-serif;
+}
+
+#app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.8;
+  cursor: progress;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: #263238;
 }
 </style>
