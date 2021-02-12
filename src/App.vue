@@ -35,6 +35,7 @@ button {
   max-width: 960px;
   margin: 0 auto;
   padding: 40px 20px;
+  animation: fadeLeaf 0.3s forwards;
 }
 
 button {
@@ -53,5 +54,16 @@ h2 {
 a {
   text-decoration: none;
   color: #263238;
+}
+
+@keyframes fadeLeaf {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }
 </style>
