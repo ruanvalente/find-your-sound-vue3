@@ -1,9 +1,9 @@
 <template>
   <h1>Encontre sua música favorita à um clique</h1>
   <div>
-    <button>
-      <a href="#">Busque o seu som</a>
-    </button>
+    <router-link to="/profile">
+      <button>Busque seu som</button>
+    </router-link>
   </div>
 </template>
 
