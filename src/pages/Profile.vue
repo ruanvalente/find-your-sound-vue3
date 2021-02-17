@@ -50,7 +50,6 @@ export default defineComponent({
 
     function loading () {
       setTimeout(() => {
-        isError.value = true
         isLoading.value = false
       }, 3000)
     }
