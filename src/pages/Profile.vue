@@ -22,20 +22,19 @@
         >Por favor, entre com seu artista</span
       >
       <div>
-        <cards />
-        {{ trackData }}
+        <cards :tracks="tracks"/>
       </div>
     </div>
   </div>
+
   <template v-if="isLoading">
     <loading />
   </template>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
-
-import http from '@/service/http'
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
 
 import Loading from '@/components/Loading.vue'
 import Cards from '@/components/Cards.vue'
@@ -43,37 +42,37 @@ import Cards from '@/components/Cards.vue'
 export default defineComponent({
   name: 'Profile',
   components: { Loading, Cards },
+
   setup () {
     const isLoading = ref(true)
     const isError = ref(false)
-    const trackData = ref([])
 
-    function loading () {
-      setTimeout(() => {
+    const store = useStore()
+
+    const loading = () => (isLoading.value = true)
+
+    async function getTracks () {
+      try {
+        const response = await store.dispatch('getTracks')
+        return response
+      } catch (error) {
+        console.error(error.messager)
+      } finally {
         isLoading.value = false
-      }, 3000)
-    }
-
-    function getData () {
-      http
-        .get('data')
-        .then((response) => {
-          console.log(response.data)
-        })
-        .catch((error) => console.error(error.messager))
+      }
     }
 
     onMounted(() => {
       console.log('mountou')
-      getData()
       loading()
+      getTracks()
     })
 
     return {
       isLoading,
       isError,
       loading,
-      getData
+      tracks: computed(() => store.state.tracks)
     }
   }
 })

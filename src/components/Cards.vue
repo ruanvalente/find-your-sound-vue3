@@ -3,16 +3,17 @@
     <h2>Músicas</h2>
     <button id="button">Carregar playlist</button>
   </button-card>
-  <section class="card">
-    <a href="#" target="_blank" class="card__link">
+  <section class="card" v-for="track in tracks" :key="track.id">
+    <a class="card__link" :href="`https://open.spotify.com/track/${track.id}`" target="_blank">
       <img
         class="card__image"
-        src="https://i.scdn.co/image/ab67616d0000b273ea29a69ebdeb0fb326af3196"
-        alt="Track Name"
+        :src="track.images[0].url"
+        :alt="track.name"
       />
+
       <section class="card__text">
-        <strong>Meu talismã</strong>
-        <p>2019-08-23</p>
+        <strong>{{ track.name }}</strong>
+        <p>{{ track.release_date }}</p>
       </section>
     </a>
     <button-card class="card__button">
@@ -28,6 +29,13 @@ import ButtonCard from '@/components/Button.vue'
 export default defineComponent({
   name: 'Cards',
   components: { ButtonCard },
+  props: {
+    tracks: {
+      type: Array,
+      required: true,
+      default: () => []
+    }
+  },
   setup () {
     const hasCard = ref(true)
 
@@ -64,6 +72,10 @@ export default defineComponent({
     height: 110px;
     transition: background-color 1s;
     font-weight: bold;
+
+    &:hover {
+      background-color: #72c088;
+    }
   }
 
   @media (max-width: 600px) {
@@ -80,7 +92,7 @@ export default defineComponent({
 
 .card {
   margin-top: 2.5rem;
-  max-width: 0,0228rem;
+  max-width: 0, 0228rem;
   display: flex;
   align-items: center;
   justify-items: center;
@@ -143,7 +155,6 @@ export default defineComponent({
           width: 100%;
           height: 70px;
           border-radius: 4px;
-
         }
       }
 
@@ -151,7 +162,6 @@ export default defineComponent({
         background-color: #72c088;
       }
     }
-
   }
   @media (max-width: 600px) {
     display: block;
