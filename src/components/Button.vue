@@ -13,7 +13,4 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-div {
-  display: flex;
-}
 </style>

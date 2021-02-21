@@ -22,7 +22,7 @@
         >Por favor, entre com seu artista</span
       >
       <div>
-        <cards :tracks="tracks"/>
+        <cards :tracks="tracks" :handlerAddToPlaylist="handlerAddToPlaylist" />
       </div>
     </div>
   </div>
@@ -39,6 +39,8 @@ import { useStore } from 'vuex'
 import Loading from '@/components/Loading.vue'
 import Cards from '@/components/Cards.vue'
 
+import Track from '@/contracts/track'
+
 export default defineComponent({
   name: 'Profile',
   components: { Loading, Cards },
@@ -50,8 +52,11 @@ export default defineComponent({
     const store = useStore()
 
     const loading = () => (isLoading.value = true)
+    const handlerAddToPlaylist = (data: Track[]) => {
+      console.log(data)
+    }
 
-    async function getTracks () {
+    const getTracks = async () => {
       try {
         const response = await store.dispatch('getTracks')
         return response
@@ -72,6 +77,7 @@ export default defineComponent({
       isLoading,
       isError,
       loading,
+      handlerAddToPlaylist,
       tracks: computed(() => store.state.tracks)
     }
   }

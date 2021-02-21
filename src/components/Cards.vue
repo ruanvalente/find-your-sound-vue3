@@ -17,23 +17,30 @@
       </section>
     </a>
     <button-card class="card__button">
-      <button>Adicionar a playlist</button>
+      <button @click="handlerAddToPlaylist(track)">Adicionar a playlist</button>
     </button-card>
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import ButtonCard from '@/components/Button.vue'
+
+import Track from '@/contracts/track'
 
 export default defineComponent({
   name: 'Cards',
   components: { ButtonCard },
   props: {
     tracks: {
-      type: Array,
+      type: Array as PropType<Track[]>,
       required: true,
-      default: () => []
+      default: () => ([])
+    },
+    handlerAddToPlaylist: {
+      type: Array as PropType<Track[]>,
+      required: true,
+      default: () => ([])
     }
   },
   setup () {
