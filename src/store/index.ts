@@ -11,6 +11,10 @@ export default createStore({
   mutations: {
     'SET_TRACKS' (state, payload) {
       state.tracks = payload
+    },
+
+    'SET_USER_PROFILE' (state, payload) {
+      state.userProfile = payload
     }
   },
   actions: {
@@ -21,6 +25,17 @@ export default createStore({
 
         commit('SET_TRACKS', response)
         console.log(response)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async getUserProfile ({ commit }) {
+      try {
+        const user = await http.get('user')
+        const response = await user.data
+
+        commit('SET_USER_PROFILE', response)
       } catch (error) {
         console.error(error)
       }

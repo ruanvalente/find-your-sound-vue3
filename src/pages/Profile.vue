@@ -2,9 +2,18 @@
   <div class="container">
     <div>
       <header>
-        <img src="@/assets/default-image.jpg" alt="Profile image" />
+        <template v-if="userProfile.avatar_url">
+          <img :src="userProfile.avatar_url" :alt="userProfile.username" />
+        </template>
+
+        <template v-else>
+          <img src="@/assets/default-image.jpg" alt="User profile" />
+        </template>
+
         <div>
-          <strong>User name</strong>
+          <strong>{{
+            userProfile.username ? userProfile.username : 'Desconhecido'
+          }}</strong>
         </div>
       </header>
 
@@ -67,10 +76,22 @@ export default defineComponent({
       }
     }
 
+    const getUserProfile = async () => {
+      try {
+        const response = await store.dispatch('getUserProfile')
+        return response
+      } catch (error) {
+        console.error(error.messager)
+      } finally {
+        console.log('tudo ok')
+      }
+    }
+
     onMounted(() => {
       console.log('mountou')
       loading()
       getTracks()
+      getUserProfile()
     })
 
     return {
@@ -78,7 +99,9 @@ export default defineComponent({
       isError,
       loading,
       handlerAddToPlaylist,
-      tracks: computed(() => store.state.tracks)
+      getUserProfile,
+      tracks: computed(() => store.state.tracks),
+      userProfile: computed(() => store.state.userProfile)
     }
   }
 })

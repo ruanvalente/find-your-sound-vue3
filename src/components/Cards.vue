@@ -1,24 +1,28 @@
 <template>
+
   <button-card class="card__button">
     <h2>Músicas</h2>
     <button id="button">Carregar playlist</button>
   </button-card>
+
   <section class="card" v-for="track in tracks" :key="track.id">
-    <a class="card__link" :href="`https://open.spotify.com/track/${track.id}`" target="_blank">
-      <img
-        class="card__image"
-        :src="track.images[0].url"
-        :alt="track.name"
-      />
+    <a
+      class="card__link"
+      :href="`https://open.spotify.com/track/${track.id}`"
+      target="_blank"
+    >
+      <img class="card__image" :src="track.images[0].url" :alt="track.name" />
 
       <section class="card__text">
         <strong>{{ track.name }}</strong>
         <p>{{ track.release_date }}</p>
       </section>
     </a>
+
     <button-card class="card__button">
       <button @click="handlerAddToPlaylist(track)">Adicionar a playlist</button>
     </button-card>
+
   </section>
 </template>
 
@@ -35,12 +39,12 @@ export default defineComponent({
     tracks: {
       type: Array as PropType<Track[]>,
       required: true,
-      default: () => ([])
+      default: () => []
     },
     handlerAddToPlaylist: {
       type: Array as PropType<Track[]>,
       required: true,
-      default: () => ([])
+      default: () => []
     }
   },
   setup () {
