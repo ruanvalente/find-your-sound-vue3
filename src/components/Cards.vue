@@ -1,8 +1,9 @@
 <template>
-
   <button-card class="card__button">
     <h2>Músicas</h2>
-    <button id="button">Carregar playlist</button>
+    <button id="button" @click="handlerLoadingPlaylist">
+      Carregar playlist
+    </button>
   </button-card>
 
   <section class="card" v-for="track in tracks" :key="track.id">
@@ -22,12 +23,12 @@
     <button-card class="card__button">
       <button @click="handlerAddToPlaylist(track)">Adicionar a playlist</button>
     </button-card>
-
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
+
 import ButtonCard from '@/components/Button.vue'
 
 import Track from '@/contracts/track'
@@ -42,11 +43,17 @@ export default defineComponent({
       default: () => []
     },
     handlerAddToPlaylist: {
-      type: Array as PropType<Track[]>,
+      type: Function,
+      required: true,
+      default: () => []
+    },
+    handlerLoadingPlaylist: {
+      type: Function,
       required: true,
       default: () => []
     }
   },
+
   setup () {
     const hasCard = ref(true)
 

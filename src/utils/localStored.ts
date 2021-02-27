@@ -1,14 +1,10 @@
-export function save (key: string, data: any): any {
-  const item = window.localStorage.getItem(key)
+export function writeItem (key: string, data: any) {
   const stored = JSON.stringify(data)
-  // eslint-disable-next-line no-unused-expressions
-  if (!item) {
-    window.localStorage.setItem(key, stored)
-  }
+  window.localStorage.setItem(key, stored)
 }
 
-export function get (key: string): any {
-  const value = window.localStorage.getItem(key)
+export function readItem (key: string): any {
+  const stored: any = window.localStorage.getItem(key)
 
-  return value
+  return JSON.parse(stored)
 }

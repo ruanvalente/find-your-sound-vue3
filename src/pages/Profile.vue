@@ -31,7 +31,11 @@
         >Por favor, entre com seu artista</span
       >
       <div>
-        <cards :tracks="tracks" :handlerAddToPlaylist="handlerAddToPlaylist" />
+        <cards
+          :tracks="tracks"
+          :handlerAddToPlaylist="handlerAddToPlaylist"
+          :handlerLoadingPlaylist="handlerLoadingPlaylist"
+        />
       </div>
     </div>
   </div>
@@ -45,6 +49,8 @@
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 
+import { writeItem, readItem } from '@/utils/localStored'
+
 import Loading from '@/components/Loading.vue'
 import Cards from '@/components/Cards.vue'
 
@@ -57,13 +63,19 @@ export default defineComponent({
   setup () {
     const isLoading = ref(true)
     const isError = ref(false)
+    const playList = ref<Track[]>([])
 
     const store = useStore()
 
     const loading = () => (isLoading.value = true)
-    const handlerAddToPlaylist = (data: Track[]) => {
-      console.log(data)
+
+    const handlerAddToPlaylist = (data: Track) => {
+      playList.value.push(data)
+      writeItem('FindYourSound::Vue3', playList.value)
     }
+
+    const handlerLoadingPlaylist = () =>
+      console.log(readItem('FindYourSound::Vue3'))
 
     const getTracks = async () => {
       try {
@@ -99,6 +111,7 @@ export default defineComponent({
       isError,
       loading,
       handlerAddToPlaylist,
+      handlerLoadingPlaylist,
       getUserProfile,
       tracks: computed(() => store.state.tracks),
       userProfile: computed(() => store.state.userProfile)

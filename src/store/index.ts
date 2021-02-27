@@ -24,7 +24,6 @@ export default createStore({
         const response = await tracks.data
 
         commit('SET_TRACKS', response)
-        console.log(response)
       } catch (error) {
         console.error(error)
       }
