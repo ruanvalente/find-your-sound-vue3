@@ -49,7 +49,7 @@
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 
-import { writeItem, readItem } from '@/utils/localStored'
+import { writeItem } from '@/utils/localStored'
 
 import Loading from '@/components/Loading.vue'
 import Cards from '@/components/Cards.vue'
@@ -74,8 +74,11 @@ export default defineComponent({
       writeItem('FindYourSound::Vue3', playList.value)
     }
 
-    const handlerLoadingPlaylist = () =>
-      console.log(readItem('FindYourSound::Vue3'))
+    const handlerLoadingPlaylist = () => {
+      store.dispatch('loadingUserPlaylist')
+
+      console.log(store.state.playlist)
+    }
 
     const getTracks = async () => {
       try {

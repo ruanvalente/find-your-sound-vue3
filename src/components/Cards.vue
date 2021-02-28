@@ -27,7 +27,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import {
+  defineComponent,
+  PropType
+} from 'vue'
 
 import ButtonCard from '@/components/Button.vue'
 
@@ -45,20 +48,12 @@ export default defineComponent({
     handlerAddToPlaylist: {
       type: Function,
       required: true,
-      default: () => []
+      default: () => ({})
     },
     handlerLoadingPlaylist: {
       type: Function,
       required: true,
-      default: () => []
-    }
-  },
-
-  setup () {
-    const hasCard = ref(true)
-
-    return {
-      hasCard
+      default: () => ({})
     }
   }
 })

@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 
 import http from '@/service/http'
+import { readItem } from '@/utils/localStored'
 
 export default createStore({
   state: {
@@ -9,12 +10,16 @@ export default createStore({
     playlist: []
   },
   mutations: {
-    'SET_TRACKS' (state, payload) {
+    SET_TRACKS (state, payload) {
       state.tracks = payload
     },
 
-    'SET_USER_PROFILE' (state, payload) {
+    SET_USER_PROFILE (state, payload) {
       state.userProfile = payload
+    },
+
+    SET_USER_PLAYLIST (state, payload) {
+      state.playlist = payload
     }
   },
   actions: {
@@ -35,6 +40,16 @@ export default createStore({
         const response = await user.data
 
         commit('SET_USER_PROFILE', response)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    loadingUserPlaylist ({ commit }) {
+      try {
+        const playlist = readItem('FindYourSound::Vue3')
+
+        commit('SET_USER_PLAYLIST', playlist)
       } catch (error) {
         console.error(error)
       }
