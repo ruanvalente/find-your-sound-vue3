@@ -22,10 +22,11 @@
           type="text"
           name="search"
           id="search"
+          v-model="search"
           placeholder="Dgite sua música/artista"
           :class="{ 'error-input': isError }"
         />
-        <button type="submit">Buscar</button>
+        <button type="submit" @click.prevent="handlerSearch">Buscar</button>
       </form>
       <span :class="{ error: isError }" v-if="isError"
         >Por favor, entre com seu artista</span
@@ -64,6 +65,7 @@ export default defineComponent({
     const isLoading = ref(true)
     const isError = ref(false)
     const playList = ref<Track[]>([])
+    const search = ref('')
 
     const store = useStore()
 
@@ -78,6 +80,14 @@ export default defineComponent({
       store.dispatch('loadingUserPlaylist')
 
       console.log(store.state.playlist)
+    }
+
+    const handlerSearch = () => {
+      const result = store.state.tracks.filter((param: any) =>
+        param.name.toLowerCase() === search.value.toLowerCase() ? param.name : ''
+      )
+
+      console.log(result)
     }
 
     const getTracks = async () => {
@@ -113,8 +123,10 @@ export default defineComponent({
       isLoading,
       isError,
       loading,
+      search,
       handlerAddToPlaylist,
       handlerLoadingPlaylist,
+      handlerSearch,
       getUserProfile,
       tracks: computed(() => store.state.tracks),
       userProfile: computed(() => store.state.userProfile)
